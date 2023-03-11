@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Suspense } from 'react';
 import { store } from 'redux/store';
-import App from 'components/App/App';
+import App from 'App/App';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
