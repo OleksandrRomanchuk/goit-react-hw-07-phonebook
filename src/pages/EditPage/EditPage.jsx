@@ -1,34 +1,34 @@
+import FormField from 'shared/components/FormField/FormField';
+import Button from 'shared/components/Button/Button';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-	selectGroups,
-	selectFilter,
 	selectCurrentContact,
-} from 'redux/selectors';
+	selectContactsGroups,
+} from 'redux/contacts/contactsSelectors';
+import { selectFilter } from 'redux/contacts/contactsSelectors';
 import { useParams, useNavigate } from 'react-router-dom';
-import { editContact } from 'redux/operations';
-import { socialLinksCheck } from 'helpers/socialLinksCheck';
-import { fetchContactById } from 'redux/operations';
+import { editContact } from 'redux/contacts/contactsOperations';
+import { socialLinksCheck } from 'shared/helpers/socialLinksCheck';
+import { fetchContactById } from 'redux/contacts/contactsOperations';
+import { fields } from './fields';
 
 import {
 	EditForm,
 	PositioningWrapperMain,
 	PositioningGruopWrapper,
-	Label,
 	GroupLabel,
 	GroupInput,
-	Input,
 	GroupSelect,
 	GroupSpan,
-	SubmitBtn,
-} from 'components/ContactForm/ContactForm.styled';
+} from 'modules/ContactForm/ContactForm.styled';
 
 const EditPage = () => {
 	const currentContact = useSelector(selectCurrentContact);
 	const [formValues, setFormValues] = useState(null);
 	const { id: itemId } = useParams();
 	const filter = useSelector(selectFilter);
-	const myGroups = useSelector(selectGroups);
+	const myGroups = useSelector(selectContactsGroups);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -97,74 +97,40 @@ const EditPage = () => {
 			{formValues && !filter && (
 				<EditForm onSubmit={onFormSubmit}>
 					<PositioningWrapperMain>
-						<Label>
-							Name:
-							<Input
-								onChange={handleInputChange}
-								type="text"
-								name="name"
-								pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-								title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-								value={formValues.name}
-								placeholder="Gregor ....."
-								required
-							/>
-						</Label>
-						<Label>
-							Phone number:
-							<Input
-								onChange={handleInputChange}
-								type="tel"
-								name="phoneNumber"
-								pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-								title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-								value={formValues.phoneNumber}
-								placeholder="+380 ....."
-								required
-							/>
-						</Label>
-						<Label>
-							Email:
-							<Input
-								onChange={handleInputChange}
-								type="email"
-								name="email"
-								value={formValues.email}
-								placeholder="some_body@....."
-							/>
-						</Label>
+						<FormField
+							handleChange={handleInputChange}
+							pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+							value={formValues.name}
+							{...fields.name}
+						/>
+						<FormField
+							handleChange={handleInputChange}
+							pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+							value={formValues.phoneNumber}
+							{...fields.phoneNumber}
+						/>
+						<FormField
+							handleChange={handleInputChange}
+							value={formValues.email}
+							{...fields.email}
+						/>
 					</PositioningWrapperMain>
 					<PositioningWrapperMain>
-						<Label>
-							Linkedin:
-							<Input
-								onChange={handleInputChange}
-								type="url"
-								name="linkedin"
-								value={formValues.socialLinks.linkedin}
-								placeholder="https://www.linkedin.com/in/....."
-							/>
-						</Label>
-						<Label>
-							Facebook:
-							<Input
-								onChange={handleInputChange}
-								type="url"
-								name="facebook"
-								value={formValues.socialLinks.facebook}
-								placeholder="https://www.facebook.com/....."
-							/>
-						</Label>
-						<Label>
-							Telegram:
-							<Input
-								onChange={handleInputChange}
-								type="url"
-								name="telegram"
-								value={formValues.socialLinks.telegram}
-								placeholder="https://t.me/....."
-							/>
-						</Label>
+						<FormField
+							handleChange={handleInputChange}
+							value={formValues.linkedin}
+							{...fields.linkedin}
+						/>
+						<FormField
+							handleChange={handleInputChange}
+							value={formValues.facebook}
+							{...fields.facebook}
+						/>
+						<FormField
+							handleChange={handleInputChange}
+							value={formValues.telegram}
+							{...fields.telegram}
+						/>
 					</PositioningWrapperMain>
 					<PositioningGruopWrapper>
 						<GroupLabel>
@@ -193,7 +159,7 @@ const EditPage = () => {
 							</GroupSelect>
 						</GroupLabel>
 					</PositioningGruopWrapper>
-					<SubmitBtn type="submit">Save changes</SubmitBtn>
+					<Button type="submit" text="Save changes" title="Save changes" />
 				</EditForm>
 			)}
 		</>
