@@ -1,10 +1,10 @@
-import SocialLinks from 'components/SocialLinks/SocialLinks';
+import SocialLinks from 'shared/components/SocialLinks/SocialLinks';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentContact } from 'redux/selectors';
+import { selectCurrentContact } from 'redux/contacts/contactsSelectors';
 import { useParams } from 'react-router-dom';
-import { fetchContactById } from 'redux/operations';
-import { dateTransform } from 'helpers/dateTransform';
+import { fetchContactById } from 'redux/contacts/contactsOperations';
+import { dateTransform } from 'shared/helpers/dateTransform';
 
 import {
 	DetailsWrapper,
