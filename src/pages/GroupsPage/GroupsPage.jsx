@@ -1,15 +1,15 @@
-import Loader from 'components/Loader/Loader';
-import GroupContactList from 'components/GroupContactList/GroupContactList';
-import Notification from 'components/Notification/Notification';
+import Loader from 'shared/components/Loader/Loader';
+import GroupContactList from 'shared/components/GroupContactList/GroupContactList';
+import Notification from 'shared/components/Notification/Notification';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	selectContacts,
-	selectGroups,
-	selectGroupFilter,
-} from 'redux/selectors';
-import { setGroupFilter } from 'redux/groupFilterSlice';
-import { fetchContacts } from 'redux/operations';
+	selectContactsGroups,
+} from 'redux/contacts/contactsSelectors';
+import { selectGroupFilter } from 'redux/groupFilter/groupFilterSelectors';
+import { fetchContacts } from 'redux/contacts/contactsOperations';
+import { setGroupFilter } from 'redux/groupFilter/groupFilterSlice';
 
 import {
 	LeftContainer,
@@ -22,7 +22,7 @@ const GroupPage = () => {
 	const areContacts = Boolean(items.length);
 	const groupFilter = useSelector(selectGroupFilter);
 	const dispatch = useDispatch();
-	const myGroups = useSelector(selectGroups);
+	const myGroups = useSelector(selectContactsGroups);
 
 	useEffect(() => {
 		dispatch(fetchContacts());
